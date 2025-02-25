@@ -4,17 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Platform</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <h1>Добро пожаловать в Music Platform</h1>
-    <p>Нажмите кнопку ниже, чтобы проверить Telegram Web App API</p>
-    <button onclick="getUserData()">Получить данные</button>
-    
+    <h1>Добро пожаловать в Music Platform!</h1>
+
+    <!-- Кнопка Telegram Login -->
+    <script async src="https://telegram.org/js/telegram-widget.js?7"
+            data-telegram-login="mus_platform_bot" <!-- Замени на свое имя бота -->
+            data-size="large"
+            data-auth-url="http://localhost:3000/auth"
+            data-request-access="write">
+    </script>
+
+    <button onclick="fetchData()">Проверить API</button>
+    <p id="api-response"></p>
+
     <script>
-        function getUserData() {
-            let tg = window.Telegram.WebApp;
-            alert(`Привет, ${tg.initDataUnsafe.user.first_name}!`);
+        async function fetchData() {
+            const response = await fetch("http://localhost:3000/");
+            const data = await response.text();
+            document.getElementById("api-response").innerText = data;
         }
     </script>
 </body>
